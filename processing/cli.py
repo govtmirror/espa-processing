@@ -574,7 +574,7 @@ def check_projection_aea(args):
 
 
 class MissingUtmError(CliException):
-    """Exception for missing AEA arguments"""
+    """Exception for missing UTM arguments"""
 
     def __init__(self, value):
         super(MissingUtmError).__init__(self.fmt.format(self.value))
@@ -608,7 +608,7 @@ def check_projection_utm(args):
 
 
 class MissingPsError(CliException):
-    """Exception for missing AEA arguments"""
+    """Exception for missing PS arguments"""
 
     def __init__(self, value):
         super(MissingPsError).__init__(self.fmt.format(self.value))
