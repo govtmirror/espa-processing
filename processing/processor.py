@@ -773,6 +773,67 @@ class LandsatProcessor(CDRProcessor):
                 if len(output) > 0:
                     self._logger.info(output)
 
+    def generate_class_based_qa(self):
+        """Generates the initial class based QA band from the Level-1 QA band
+        """
+
+        cmd = ['generate_class_based_qa',
+               '--xml', self._xml_filename]
+
+        # Turn the list into a string
+        cmd = ' '.join(cmd)
+
+        self._logger.info(' '.join(['CLASS BASED QA COMMAND:', cmd]))
+
+        output = ''
+        try:
+            output = utilities.execute_cmd(cmd)
+        finally:
+            if len(output) > 0:
+                self._logger.info(output)
+
+    def generate_dilated_cloud(self):
+        """Adds cloud dilation to the class based QA band based on original
+           cfmask cloud dilation
+        """
+
+        cmd = ['dilate_class_value',
+               '--xml', self._xml_filename,
+               '--class', '4',
+               '--distance', '3']
+
+        # Turn the list into a string
+        cmd = ' '.join(cmd)
+
+        self._logger.info(' '.join(['CLOUD DILATION COMMAND:', cmd]))
+
+        output = ''
+        try:
+            output = utilities.execute_cmd(cmd)
+            pass
+        finally:
+            if len(output) > 0:
+                self._logger.info(output)
+
+    def generate_cfmask_water_detection(self):
+        """Adds CFmask based water detection to the class based QA band
+        """
+
+        cmd = ['cfmask_water_detection',
+               '--xml', self._xml_filename]
+
+        # Turn the list into a string
+        cmd = ' '.join(cmd)
+
+        self._logger.info(' '.join(['CFMASK WATER DETECTION COMMAND:', cmd]))
+
+        output = ''
+        try:
+            output = utilities.execute_cmd(cmd)
+        finally:
+            if len(output) > 0:
+                self._logger.info(output)
+
     def sr_command_line(self):
         """Returns the command line required to generate surface reflectance
 
@@ -1015,7 +1076,16 @@ class LandsatProcessor(CDRProcessor):
 
             self.generate_land_water_mask()
 
+            if self.is_collection_data:
+                self.generate_class_based_qa()
+
             self.generate_sr_products()
+
+            if self.is_collection_data:
+                self.generate_dilated_cloud(self):
+
+            if self.is_collection_data:
+                self.generate_cfmask_water_detection()
 
             self.generate_cloud_masking()
 
