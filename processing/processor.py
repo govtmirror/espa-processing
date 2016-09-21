@@ -1082,7 +1082,7 @@ class LandsatProcessor(CDRProcessor):
             self.generate_sr_products()
 
             if self.is_collection_data:
-                self.generate_dilated_cloud(self):
+                self.generate_dilated_cloud(self)
 
             if self.is_collection_data:
                 self.generate_cfmask_water_detection()
