@@ -882,6 +882,11 @@ class LandsatProcessor(CDRProcessor):
 
             execute_do_ledaps = True
 
+        # Always generate TOA and BT for collection processing
+        # It is required by the cfmask_based_water_detection
+        if self.is_collection_data:
+            execute_do_ledaps = True
+
         # Only return a string if we will need to run SR processing
         if not execute_do_ledaps:
             cmd = None
