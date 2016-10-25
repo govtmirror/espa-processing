@@ -25,7 +25,11 @@ from collections import namedtuple
 SensorInfo = namedtuple('SensorInfo', ['product_prefix',
                                        'date_acquired',
                                        'sensor_name',
-                                       'default_pixel_size'])
+                                       'default_pixel_size',
+                                       'horizontal',
+                                       'vertical',
+                                       'path',
+                                       'row'])
 
 
 """Supported Sensor Codes
@@ -134,8 +138,12 @@ def landsat_collection_sensor_info(product_id):
     elif is_lc08(product_id) or is_lo08(product_id) or is_lt08(product_id):
         sensor_name = 'L8'
 
-    return SensorInfo(product_prefix, date_acquired,
-                      sensor_name, default_pixel_size)
+    return SensorInfo(product_prefix=product_prefix,
+                      date_acquired=date_acquired,
+                      sensor_name=sensor_name,
+                      default_pixel_size=default_pixel_size,
+                      horizontal=0, vertical=0,
+                      path=path, row=row)
 
 
 def landsat_pre_collection_sensor_info(product_id):
@@ -177,8 +185,12 @@ def landsat_pre_collection_sensor_info(product_id):
     elif is_lc8(product_id) or is_lo8(product_id) or is_lt8(product_id):
         sensor_name = 'L8'
 
-    return SensorInfo(product_prefix, date_acquired,
-                      sensor_name, default_pixel_size)
+    return SensorInfo(product_prefix=product_prefix,
+                      date_acquired=date_acquired,
+                      sensor_name=sensor_name,
+                      default_pixel_size=default_pixel_size,
+                      horizontal=0, vertical=0,
+                      path=path, row=row)
 
 
 def modis_sensor_info(product_id):
@@ -220,8 +232,12 @@ def modis_sensor_info(product_id):
     elif is_aqua(product_id):
         sensor_name = 'Aqua'
 
-    return SensorInfo(product_prefix, date_acquired,
-                      sensor_name, default_pixel_size)
+    return SensorInfo(product_prefix=product_prefix,
+                      date_acquired=date_acquired,
+                      sensor_name=sensor_name,
+                      default_pixel_size=default_pixel_size,
+                      horizontal=horizontal, vertical=vertical,
+                      path=0, row=0)
 
 
 """Map Landsat regular expressions for supported products to the correct

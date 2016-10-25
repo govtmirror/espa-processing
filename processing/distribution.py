@@ -746,16 +746,16 @@ def distribute_product(immutability, product_name, source_path,
 
     distribution_method = env.get_distribution_method()
 
-    order_id = parms['orderid']
-
     # The file paths to the distributed product and checksum files
     product_file = 'ERROR'
     cksum_file = 'ERROR'
 
     if distribution_method == DISTRIBUTION_METHOD_LOCAL:
+        sensor_info = senso.info(parms['product_id'])
+
         # Use the local cache path
         cache_path = os.path.join(settings.ESPA_LOCAL_CACHE_DIRECTORY,
-                                  order_id)
+                                  sensor_info.path, sensor_info.row)
 
         # Adjust the packaging_path to use the cache
         package_path = os.path.join(packaging_path, cache_path)
@@ -769,7 +769,7 @@ def distribute_product(immutability, product_name, source_path,
     else:  # remote
         # Use the remote cache path
         cache_path = os.path.join(settings.ESPA_REMOTE_CACHE_DIRECTORY,
-                                  order_id)
+                                  parms['orderid'])
 
         (product_file, cksum_file) = \
             distribute_product_remote(immutability,
