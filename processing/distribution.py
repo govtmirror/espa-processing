@@ -18,6 +18,7 @@ from logging_tools import EspaLogging
 from environment import Environment, DISTRIBUTION_METHOD_LOCAL
 from espa_exception import ESPAException
 import transfer
+import sensor
 
 
 def package_product(immutability, source_directory, destination_directory,
@@ -751,7 +752,7 @@ def distribute_product(immutability, product_name, source_path,
     cksum_file = 'ERROR'
 
     if distribution_method == DISTRIBUTION_METHOD_LOCAL:
-        sensor_info = senso.info(parms['product_id'])
+        sensor_info = sensor.info(parms['product_id'])
 
         # Use the local cache path
         cache_path = os.path.join(settings.ESPA_LOCAL_CACHE_DIRECTORY,
