@@ -756,6 +756,7 @@ def distribute_product(immutability, product_name, source_path,
 
         # Use the local cache path
         cache_path = os.path.join(settings.ESPA_LOCAL_CACHE_DIRECTORY,
+                                  sensor_info.date_acquired.year,
                                   sensor_info.path, sensor_info.row)
 
         # Adjust the packaging_path to use the cache
